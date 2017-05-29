@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <name>JDBC_ORACLE</name>
+    <resourceType>ae.shared.JDBCSharedResource</resourceType>
+    <config>
+        <connection>ORACLE</connection>
+        <location>jdbc:tibcosoftwareinc:oracle://tntnt05:1521;SID=tntdb1</location>
+        <maxConnections>10</maxConnections>
+        <driver>tibcosoftwareinc.jdbc.oracle.OracleDriver</driver>
+        <user>tntqa</user>
+        <password>#!F6QCBJyDdfIjnk4X2AInV4MksMO/bJHV</password>
+    </config>
+</BWSharedResource>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <name>JDBC_SQLSERVER</name>
+    <resourceType>ae.shared.JDBCSharedResource</resourceType>
+    <config>
+        <connection>SQLServer</connection>
+        <location>jdbc:tibcosoftwareinc:sqlserver://ANNALI-LT\ANNALISQLSERVER:80;databaseName=BW_database</location>
+        <maxConnections>10</maxConnections>
+        <driver>tibcosoftwareinc.jdbc.sqlserver.SQLServerDriver</driver>
+        <user>testerA</user>
+        <password>#!qPEgOf+VXddDGHVRTko4d4y996OmyZoK</password>
+        <connectionType>JDBC</connectionType>
+        <loginTimeout/>
+    </config>
+</BWSharedResource>
