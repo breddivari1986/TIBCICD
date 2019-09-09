@@ -13,11 +13,6 @@ pipeline {
             slackSend()
           }
         }
-        stage('') {
-          steps {
-            catchError(buildResult: 'BuildEar Failed', message: 'BuildEar Failed', stageResult: 'failed')
-          }
-        }
       }
     }
     stage('ExportXml') {
