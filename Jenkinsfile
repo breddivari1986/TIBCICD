@@ -44,7 +44,7 @@ pipeline {
         }
         stage('UnitTests') {
           steps {
-            sleep 9000
+            sleep(time: 9000, unit: 'MILLISECONDS')
           }
         }
       }
