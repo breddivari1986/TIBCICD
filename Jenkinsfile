@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('SCM-Checkout') {
       steps {
-        git(url: 'https://github.com/breddivari1986/TIBCICD', branch: 'Datahub-Reservations', poll: true)
+        git(url: 'https://github.com/breddivari1986/TIBCICD', branch: 'master', poll: true)
       }
     }
     stage('ExportXml') {
