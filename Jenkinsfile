@@ -6,24 +6,52 @@ pipeline {
         git(url: 'https://github.com/breddivari1986/TIBCICD', branch: 'master', poll: true)
       }
     }
+    stage('ValidateProject') {
+      parallel {
+        stage('ValidateProject') {
+          steps {
+            build 'ExportXml'
+          }
+        }
+        stage('SlackNotify-ProjectReport') {
+          steps {
+            slackSend()
+          }
+        }
+      }
+    }
+    stage('BuildEar') {
+      steps {
+        build 'BuildEar'
+      }
+    }
     stage('ExportXml') {
       steps {
         build 'ExportXml'
       }
     }
-    stage('UpdateGV') {
+    stage('UpdateGvXml') {
       steps {
         build 'UpdateGvXml'
       }
     }
-    stage('Deploy2Admin') {
-      steps {
-        build 'Deploy'
+    stage('Deploy') {
+      parallel {
+        stage('Deploy') {
+          steps {
+            build 'Deploy'
+          }
+        }
+        stage('UnitTests') {
+          steps {
+            sleep 9000
+          }
+        }
       }
     }
-    stage('UnitTests') {
+    stage('SlackNotify-FinalStatus') {
       steps {
-        sleep 9000
+        slackSend()
       }
     }
   }
