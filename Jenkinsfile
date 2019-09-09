@@ -1,18 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('BuildEar') {
-      parallel {
-        stage('BuildEar') {
-          steps {
-            build 'BuildEar'
-          }
-        }
-        stage('SlackNotify-Package') {
-          steps {
-            slackSend()
-          }
-        }
+    stage('SCM-Checkout') {
+      steps {
+        git(url: 'https://github.com/breddivari1986/TIBCICD/tree/master/Datahub-Reservations', branch: 'Datahub-Reservations', poll: true)
       }
     }
     stage('ExportXml') {
@@ -26,31 +17,13 @@ pipeline {
       }
     }
     stage('Deploy2Admin') {
-      parallel {
-        stage('Deploy2Admin') {
-          steps {
-            build 'Deploy'
-          }
-        }
-        stage('SlackNotify-Deployment') {
-          steps {
-            slackSend()
-          }
-        }
+      steps {
+        build 'Deploy'
       }
     }
     stage('UnitTests') {
-      parallel {
-        stage('UnitTests') {
-          steps {
-            sleep 9000
-          }
-        }
-        stage('SlackNotify-TestResults') {
-          steps {
-            slackSend()
-          }
-        }
+      steps {
+        sleep 9000
       }
     }
   }
