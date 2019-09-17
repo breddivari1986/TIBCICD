@@ -7,17 +7,8 @@ pipeline {
       }
     }
     stage('ValidateProject') {
-      parallel {
-        stage('ValidateProject') {
-          steps {
-            build 'ExportXml'
-          }
-        }
-        stage('SlackNotify-ProjectReport') {
-          steps {
-            slackSend()
-          }
-        }
+      steps {
+        build 'ExportXml'
       }
     }
     stage('BuildEar') {
