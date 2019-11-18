@@ -32,19 +32,19 @@ pipeline {
     }
     stage('ExportXml') {
       steps {
-        build 'ExportXml'
+        sleep 2
       }
     }
     stage('UpdateGvXml') {
       steps {
-        build 'UpdateGvXml'
+        sleep 2
       }
     }
     stage('Deploy') {
       parallel {
         stage('Deploy') {
           steps {
-            build 'Deploy'
+            sleep 2
           }
         }
         stage('UnitTests') {
