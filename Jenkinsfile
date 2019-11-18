@@ -15,7 +15,7 @@ pipeline {
       parallel {
         stage('BuildEar') {
           steps {
-            build 'BuildEar'
+            sleep 2
           }
         }
         stage('SlackNotify-Buildear') {
