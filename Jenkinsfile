@@ -8,7 +8,7 @@ pipeline {
     }
     stage('ValidateProject') {
       steps {
-        build 'ExportXml'
+        sleep 5
       }
     }
     stage('BuildEar') {
