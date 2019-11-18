@@ -12,8 +12,22 @@ pipeline {
       }
     }
     stage('BuildEar') {
-      steps {
-        build 'BuildEar'
+      parallel {
+        stage('BuildEar') {
+          steps {
+            build 'BuildEar'
+          }
+        }
+        stage('SlackNotify-Buildear') {
+          steps {
+            sleep 5
+          }
+        }
+        stage('UploadToNexus') {
+          steps {
+            sleep 5
+          }
+        }
       }
     }
     stage('ExportXml') {
@@ -43,6 +57,11 @@ pipeline {
     stage('SlackNotify-FinalStatus') {
       steps {
         slackSend()
+      }
+    }
+    stage('Email') {
+      steps {
+        emailext(subject: 'Test', body: 'test')
       }
     }
   }
