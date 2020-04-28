@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('SCM-Checkout') {
       steps {
-        git(url: 'https://github.com/breddivari1986/TIBCICD.git', branch: 'master', poll: true, changelog: true)
+        git(url: 'https://github.com/breddivari1986/TIBCICD.git', branch: 'master', poll: true, changelog: true, credentialsId: 'bbc3efab585838eb70e02fcacd46c68544ea2241')
       }
     }
 
