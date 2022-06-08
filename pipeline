@@ -1,0 +1,85 @@
+pipeline {
+    agent any
+    environment {
+        Buildir = "${RepoPath}/${Proxyname}"
+        NEXUS_USERNAME="admin"
+        NEXUS_PASSWORD="nexusadmin"
+    }
+    tools { 
+      maven 'MAVEN_HOME' 
+      jdk 'JAVA_HOME' 
+    }
+    stages {
+        stage('Checkout') {
+        steps {
+            
+              echo "path is ${RepoPath}/${Proxyname}/apiproxy"
+              cleanWs()
+             
+              checkout([$class: 'GitSCM', 
+                branches: [[name: '*/main']],
+                extensions: [
+                    [$class: 'SparseCheckoutPaths', 
+                    sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:"${RepoPath}"]]]
+                    ],
+                userRemoteConfigs: [[url: 'https://github.com/breddivari1986/core.git']]])
+              sh "pwd"
+              sh "ls -ltr"
+
+              sh "ls -lrt"
+              echo "$params.RepoPath"
+              echo '${env.Buildir}'
+              //sh "mvn clean install"
+            
+            
+
+            dir("${env.Buildir}") {
+                  sh "pwd"
+                  sh "ls -lrt"
+                  //sh "mvn clean install"
+            }
+            sh "pwd"
+            
+          }
+        }
+        stage ('package') {
+            steps {
+             dir("${env.Buildir}") {
+                  sh "pwd"
+                  sh "ls -lrt"
+                  //sh "mvn clean install"
+                  sh "zip -r ${Proxyname}.zip apiproxy"
+                }
+                
+                
+            }
+            
+        }
+
+      stage (Publish) {
+        steps{
+          script
+           {
+            //def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+            //def artifactId = sh script: 'mvn help:evaluate -Dexpression=project.artifactId -q -DforceStdout', returnStdout: true
+            version = readMavenPom().getVersion()
+            ArtifactId = readMavenPom().getArtifactId()
+            
+           }
+          echo "${env.version}"
+          echo "${version}"
+          sh "mvn deploy:deploy-file \
+            -DgroupId=com.example \
+            -DartifactId=${env.ArtifactId} \
+            -Dversion= ${env.version} \
+            -Dpackaging=zip \
+            -Dfile=${Proxyname}.zip \
+            -DgeneratePom=true \
+            -DupdateReleaseInfo=true \
+            -Durl='http://localhost:8081/repository/apigee/' \
+            "
+        }
+      
+      }
+    }
+}
