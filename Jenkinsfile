@@ -74,7 +74,7 @@ pipeline {
 
     stage('Email') {
       steps {
-        emailext(subject: 'Test', body: 'test')
+        emailext(subject: 'Test', body: 'test1')
       }
     }
 
